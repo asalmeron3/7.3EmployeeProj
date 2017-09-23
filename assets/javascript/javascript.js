@@ -66,7 +66,21 @@
   var ourFBdata = snapshot.val();
 
   //make a variable that will store a long STRING of html code to be appended to our table. This html code should include the data we want to display on the DOM-table. The data should come from firebase (which we called and store in the 2 lines above). 
-  var tableHTML = "<tr><th>" +ourFBdata.name + "</th><th>" +ourFBdata.role +  "</th><th>" + ourFBdata.date +  "</th><th> NAN_1 </th><th>" + ourFBdata.rate + "</th><th> NAN_2 </th></tr>";
+  var tableHTML = "<tr><th>" +ourFBdata.name + "</th><th>" +ourFBdata.role +  "</th><th>" + ourFBdata.date +  "</th>";
+
+  var someDate = moment(ourFBdata.date,"DD/MM/YYYY");
+  console.log(someDate);
+
+  var numMonths = moment().diff(moment(somedate),"months");
+  console.log(numMonths);
+
+  var billableHours = parseInt(numMonths) * parseInt(ourFBdata.rate);
+  console.log(billableHours);
+
+ tableHTML = tableHTML +  "<th>" + numMonths + "</th><th>" + ourFBdata.rate + "</th><th>" + billableHours +"</th></tr>";
+
+
+
 
   //append the html code to the table
   $(".employeeList").append(tableHTML);
