@@ -16,7 +16,7 @@
  var startDate = "";
  var monthlyRate = "";
 
- $(".pressToSubmit").on("click", function() {
+ $(document).on("click", ".pressToSubmit", function(event) {
 
      event.preventDefault();
 
@@ -34,6 +34,13 @@
      });
  });
 
- database.ref().orderByChild("dateAdded").on("child_added", function(snapshot) {}, function(errorObject) {
+ database.ref().orderByChild("dateAdded").on("child_added", function(snapshot) {
+  var ourFBdata = snapshot.val();
 
-         }
+  var tableHTML = "<tr><th>" +ourFBdata.name + "</th><th>" +ourFBdata.role +  "</th><th>" + ourFBdata.date +  "</th><th> NAN</th><th>" + ourFBdata.rate + "</th><th> NAN </th></tr>";
+  $(".employeeList").append(tableHTML);
+
+
+ }, function(errorObject) {
+
+         });
