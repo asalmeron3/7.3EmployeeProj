@@ -68,16 +68,19 @@
   //make a variable that will store a long STRING of html code to be appended to our table. This html code should include the data we want to display on the DOM-table. The data should come from firebase (which we called and store in the 2 lines above). 
   var tableHTML = "<tr><th>" +ourFBdata.name + "</th><th>" +ourFBdata.role +  "</th><th>" + ourFBdata.date +  "</th>";
 
-  var someDate = moment(ourFBdata.date,"DD/MM/YYYY");
-  console.log(someDate);
 
-  var numMonths = moment().diff(moment(somedate),"months");
-  console.log(numMonths);
+    //for the  number of months worked, we have to do some math using the user's input and moment.js
+      //from firebase, get the user's start date. with moment.js, insert the date and the format the date it is in. this will tell moment.js how to convert to a useable string for doing math later
+      var someDate = moment(ourFBdata.date,"DD/MM/YYYY");
 
-  var billableHours = parseInt(numMonths) * parseInt(ourFBdata.rate);
-  console.log(billableHours);
+      //calculate the number of months worked my taking today's date (now) and using the .diff() method from moment.js . you will subtract the moment-format of the startDate FROM now --> now = moment() . the type of units we want are months
+      var numMonths = moment().diff(moment(someDate),"months");
 
- tableHTML = tableHTML +  "<th>" + numMonths + "</th><th>" + ourFBdata.rate + "</th><th>" + billableHours +"</th></tr>";
+      //using  the number of months immediately above, we will multiply by the employee's pay-rate (this indexed/pulled from firebase). use "parseInt() to convert out strings into numbers
+      var billableHours = parseInt(numMonths) * parseInt(ourFBdata.rate);
+
+  //update the table-HTML to include the number of months worked and the billable amount
+  tableHTML = tableHTML +  "<th>" + numMonths + "</th><th>" + ourFBdata.rate + "</th><th>" + billableHours +"</th></tr>";
 
 
 
