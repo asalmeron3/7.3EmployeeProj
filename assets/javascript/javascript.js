@@ -20,6 +20,8 @@
  var startDate = "";
  var monthlyRate = "";
 
+ $(document).on("click", ".pressToSubmit", function(event) {
+
 
 //query the document for a click event on the class ".pressToSubmit". 
  $(document).on("click", ".pressToSubmit", function(event) {
@@ -49,6 +51,16 @@
 
      //Our data is now in FIREBASE, so we need to access the data from Firebase in order to update the DOM 
  });
+
+
+ database.ref().orderByChild("dateAdded").on("child_added", function(snapshot) {
+  var ourFBdata = snapshot.val();
+
+  var tableHTML = "<tr><th>" +ourFBdata.name + "</th><th>" +ourFBdata.role +  "</th><th>" + ourFBdata.date +  "</th><th> NAN</th><th>" + ourFBdata.rate + "</th><th> NAN </th></tr>";
+  $(".employeeList").append(tableHTML);
+
+
+ }, function(errorObject) {
 
 //first, access your firebase database for this project. --> "firebase.database.ref()"
 
